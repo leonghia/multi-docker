@@ -1,0 +1,15 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker image build -t nghiala/react-test --file ./client/Dockerfile.dev ./client
+
+script:
+  - docker container run -e CI=true nghiala/react-test npm test
+
+after_success:
+  - docker image build -t nghiala/multi-client ./client
+  - docker image build -t nghiala/multi-nginx ./nginx
+  - docker image build -t nghiala/multi-server ./server
+  - docker image build -t nghiala/multi-worker ./worker
