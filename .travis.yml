@@ -13,3 +13,10 @@ after_success:
   - docker image build -t nghiala/multi-nginx ./nginx
   - docker image build -t nghiala/multi-server ./server
   - docker image build -t nghiala/multi-worker ./worker
+  # Login to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take these images and push them to docker hub
+  - docker image push nghiala/multi-client
+  - docker image push nghiala/multi-nginx
+  - docker image push nghiala/multi-server
+  - docker image push nghiala/multi-worker
