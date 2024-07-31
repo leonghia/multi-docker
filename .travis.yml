@@ -20,3 +20,15 @@ after_success:
   - docker image push nghiala/multi-nginx
   - docker image push nghiala/multi-server
   - docker image push nghiala/multi-worker
+
+deploy:
+  provider: elasticbeanstalk
+  region: "ap-southeast-1"
+  app: "MultiDocker"
+  env: "MultiDocker-env"
+  bucket_name: "elasticbeanstalk-ap-southeast-1-533267185280"
+  bucket_path: "docker-multi"
+  on:
+    branch: main
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
